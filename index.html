@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#3a1466">
+  <title>ערב חדרים שמיניתשפז 👑😍</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700;800&family=Secular+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- קישוטי רקע: מנעולים, מפתחות, כוכבים ונצנוצים -->
+  <div class="bg-decor" aria-hidden="true">
+    <span class="decor d1">🔒</span>
+    <span class="decor d2">🗝️</span>
+    <span class="decor d3">⭐</span>
+    <span class="decor d4">✨</span>
+    <span class="decor d5">🔑</span>
+    <span class="decor d6">✨</span>
+    <span class="decor d7">🔐</span>
+    <span class="decor d8">⭐</span>
+    <span class="decor d9">✨</span>
+    <span class="decor d10">🗝️</span>
+  </div>
+
+  <!-- ===== מסך 1: הזנת הקוד ===== -->
+  <main id="screen-code" class="screen">
+    <h1 class="title">ערב חדרים שמיניתשפז 👑😍</h1>
+
+    <div class="hero">
+      <figure class="photo-frame" id="photo-frame">
+        <img src="img/class.jpg" alt="תמונה מחזורית של השמינית" class="photo-img" id="class-photo">
+        <span class="sticker sticker-crown" aria-hidden="true">👑</span>
+        <span class="sticker sticker-spark" aria-hidden="true">✨</span>
+        <span class="sticker sticker-heart" aria-hidden="true">💖</span>
+      </figure>
+      <div class="logo-badge" id="logo-badge">
+        <img src="img/logo.png" alt="לוגו המחזור" class="logo-img" id="class-logo">
+      </div>
+    </div>
+
+    <section class="card">
+      <p class="card-lead">פתרתן את חמש החידות? הקלידו את המספרים לפי הצבעים 🗝️</p>
+
+      <p id="config-notice" class="notice" role="alert" hidden>האפליקציה עדיין לא מחוברת לשרת ⚙️</p>
+
+      <form id="code-form" novalidate autocomplete="off">
+        <div class="code-row" id="code-row">
+          <label class="code-cell c-yellow">
+            <span class="code-label">צהוב</span>
+            <input class="code-input" id="code-1" type="text" dir="ltr" inputmode="numeric" pattern="[0-9]*" maxlength="2" enterkeyhint="next" autocomplete="off" aria-label="המספר של החידה הצהובה">
+          </label>
+          <label class="code-cell c-green">
+            <span class="code-label">ירוק</span>
+            <input class="code-input" id="code-2" type="text" dir="ltr" inputmode="numeric" pattern="[0-9]*" maxlength="2" enterkeyhint="next" autocomplete="off" aria-label="המספר של החידה הירוקה">
+          </label>
+          <label class="code-cell c-purple">
+            <span class="code-label">סגול</span>
+            <input class="code-input" id="code-3" type="text" dir="ltr" inputmode="numeric" pattern="[0-9]*" maxlength="2" enterkeyhint="next" autocomplete="off" aria-label="המספר של החידה הסגולה">
+          </label>
+          <label class="code-cell c-pink">
+            <span class="code-label">ורוד</span>
+            <input class="code-input" id="code-4" type="text" dir="ltr" inputmode="numeric" pattern="[0-9]*" maxlength="2" enterkeyhint="next" autocomplete="off" aria-label="המספר של החידה הוורודה">
+          </label>
+          <label class="code-cell c-blue">
+            <span class="code-label">תכלת</span>
+            <input class="code-input" id="code-5" type="text" dir="ltr" inputmode="numeric" pattern="[0-9]*" maxlength="2" enterkeyhint="go" autocomplete="off" aria-label="המספר של החידה התכולה">
+          </label>
+        </div>
+
+        <button type="submit" class="btn" id="btn-open">פתחו את התיבה 🔐</button>
+        <p id="code-msg" class="msg" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
+
+  <!-- ===== מסך 2: אנימציית תיבת האוצר (ממולא ע"י treasure.js) ===== -->
+  <div id="screen-anim" class="screen-anim" hidden></div>
+
+  <!-- ===== מסך 3: הצלחה ===== -->
+  <main id="screen-success" class="screen" hidden>
+    <div class="logo-badge logo-badge--small">
+      <img src="img/logo.png" alt="לוגו המחזור" class="logo-img">
+    </div>
+
+    <section class="card card--success">
+      <!-- הטקסט מגיע מהשרת בלבד -->
+      <h1 id="success-title" class="success-title"></h1>
+      <p id="success-body" class="success-body"></p>
+    </section>
+
+    <section class="card card--room">
+      <div id="room-form-wrap">
+        <form id="room-form" novalidate autocomplete="off">
+          <label for="room-input" class="room-label">תכתבו פה את המספר של החדר שנראה מי החדר המנצח🏆</label>
+          <input class="room-input" id="room-input" type="text" dir="ltr" inputmode="numeric" pattern="[0-9]*" maxlength="3" enterkeyhint="send" autocomplete="off" placeholder="מס׳ חדר">
+          <button type="submit" class="btn" id="btn-send">שליחה🎉</button>
+          <p id="room-msg" class="msg" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <p id="room-sent" class="sent-msg" role="status" aria-live="polite" hidden>המספר נשלח בהצלחה! עכשיו נשאר לחכות לתוצאות🥁😍</p>
+    </section>
+  </main>
+
+  <!-- שכבת קונפטי (מעל הכל, לא חוסמת לחיצות) -->
+  <div id="fx-layer" class="fx-layer" aria-hidden="true"></div>
+
+  <script src="config.js"></script>
+  <script src="treasure.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
