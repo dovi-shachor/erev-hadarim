@@ -124,10 +124,10 @@
     var last = i === codeInputs.length - 1;
 
     input.addEventListener("input", function () {
-      digitsOnly(input, 1);
+      digitsOnly(input, 2);
       input.classList.remove("is-empty-hint");
-      // ספרה אחת בכל תיבה: אחרי הקלדה עוברים לתיבה הבאה
-      if (input.value.length === 1 && !last) focusBox(i + 1);
+      // מעבר אוטומטי רק אחרי שתי ספרות (מספר יכול להיות חד או דו-ספרתי)
+      if (input.value.length === 2 && !last) focusBox(i + 1);
     });
 
     // בחירת כל התוכן במיקוד ובהקשה, כדי שהקלדה תחליף את המספר הקיים
@@ -140,19 +140,15 @@
     input.addEventListener("focus", selectAll);
     input.addEventListener("click", selectAll);
 
-    // כל ספרה נכנסת לתיבה אחת; ספרות נוספות (הקלדה מהירה או הדבקה) ממשיכות לתיבות הבאות
+    // תיבה מלאה (שתי ספרות) בלי בחירה: ספרה חדשה מחליפה את התוכן במקום להיחסם
     input.addEventListener("beforeinput", function (e) {
-      if (e.isComposing || e.inputType === "insertCompositionText") return;
-      if (!e.inputType || e.inputType.indexOf("insert") !== 0) return;
-      var digits = String(e.data || "").replace(/[^0-9]/g, "");
-      if (!digits) return;
-      e.preventDefault();
-      var k = i;
-      for (var d = 0; d < digits.length && k < codeInputs.length; d++, k++) {
-        codeInputs[k].value = digits.charAt(d);
-        codeInputs[k].classList.remove("is-empty-hint");
+      if (e.isComposing || e.inputType !== "insertText") return;
+      if (!/^[0-9]$/.test(e.data || "")) return;
+      if (input.value.length >= 2 && input.selectionStart === input.selectionEnd) {
+        e.preventDefault();
+        input.value = e.data;
+        input.classList.remove("is-empty-hint");
       }
-      focusBox(Math.min(k, codeInputs.length - 1));
     });
 
     input.addEventListener("keydown", function (e) {
@@ -186,7 +182,7 @@
     // כל התיבות מלאות?
     var firstEmpty = -1;
     codeInputs.forEach(function (input, i) {
-      digitsOnly(input, 1);
+      digitsOnly(input, 2);
       var empty = input.value === "";
       input.classList.toggle("is-empty-hint", empty);
       if (empty && firstEmpty < 0) firstEmpty = i;
