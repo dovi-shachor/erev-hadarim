@@ -140,15 +140,19 @@
     input.addEventListener("focus", selectAll);
     input.addEventListener("click", selectAll);
 
-    // תיבה מלאה בלי בחירה: ספרה חדשה מחליפה את התוכן (במקום להיחסם) ועוברים הלאה
+    // כל ספרה נכנסת לתיבה אחת; ספרות נוספות (הקלדה מהירה או הדבקה) ממשיכות לתיבות הבאות
     input.addEventListener("beforeinput", function (e) {
-      if (e.inputType === "insertText" && /^\d$/.test(e.data || "") &&
-          input.value.length >= 1 && input.selectionStart === input.selectionEnd) {
-        e.preventDefault();
-        input.value = e.data;
-        input.classList.remove("is-empty-hint");
-        if (!last) focusBox(i + 1);
+      if (e.isComposing || e.inputType === "insertCompositionText") return;
+      if (!e.inputType || e.inputType.indexOf("insert") !== 0) return;
+      var digits = String(e.data || "").replace(/[^0-9]/g, "");
+      if (!digits) return;
+      e.preventDefault();
+      var k = i;
+      for (var d = 0; d < digits.length && k < codeInputs.length; d++, k++) {
+        codeInputs[k].value = digits.charAt(d);
+        codeInputs[k].classList.remove("is-empty-hint");
       }
+      focusBox(Math.min(k, codeInputs.length - 1));
     });
 
     input.addEventListener("keydown", function (e) {
