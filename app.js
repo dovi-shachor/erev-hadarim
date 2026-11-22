@@ -59,7 +59,8 @@
     el.className = "msg" + (kind ? " msg--" + kind : "");
     el.textContent = "";
     // ריקון ומילוי מחדש - כדי שקורא מסך יכריז גם על הודעה חוזרת
-    window.requestAnimationFrame(function () { el.textContent = text || ""; });
+    // setTimeout ולא requestAnimationFrame: כך ההודעה מופיעה גם כשהלשונית ברקע
+    setTimeout(function () { el.textContent = text || ""; }, 30);
   }
 
   function setBusy(btn, isBusy, text) {
