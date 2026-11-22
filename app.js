@@ -124,10 +124,10 @@
     var last = i === codeInputs.length - 1;
 
     input.addEventListener("input", function () {
-      digitsOnly(input, 2);
+      digitsOnly(input, 1);
       input.classList.remove("is-empty-hint");
-      // מעבר אוטומטי רק אחרי שתי ספרות (מספר יכול להיות דו-ספרתי)
-      if (input.value.length === 2 && !last) focusBox(i + 1);
+      // ספרה אחת בכל תיבה: אחרי הקלדה עוברים לתיבה הבאה
+      if (input.value.length === 1 && !last) focusBox(i + 1);
     });
 
     // בחירת כל התוכן במיקוד ובהקשה, כדי שהקלדה תחליף את המספר הקיים
@@ -140,12 +140,14 @@
     input.addEventListener("focus", selectAll);
     input.addEventListener("click", selectAll);
 
-    // תיבה מלאה (שתי ספרות) בלי בחירה: ספרה חדשה מחליפה את התוכן במקום להיחסם
+    // תיבה מלאה בלי בחירה: ספרה חדשה מחליפה את התוכן (במקום להיחסם) ועוברים הלאה
     input.addEventListener("beforeinput", function (e) {
       if (e.inputType === "insertText" && /^\d$/.test(e.data || "") &&
-          input.value.length >= 2 && input.selectionStart === input.selectionEnd) {
+          input.value.length >= 1 && input.selectionStart === input.selectionEnd) {
         e.preventDefault();
         input.value = e.data;
+        input.classList.remove("is-empty-hint");
+        if (!last) focusBox(i + 1);
       }
     });
 
@@ -180,7 +182,7 @@
     // כל התיבות מלאות?
     var firstEmpty = -1;
     codeInputs.forEach(function (input, i) {
-      digitsOnly(input, 2);
+      digitsOnly(input, 1);
       var empty = input.value === "";
       input.classList.toggle("is-empty-hint", empty);
       if (empty && firstEmpty < 0) firstEmpty = i;
